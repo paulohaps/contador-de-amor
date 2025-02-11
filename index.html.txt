@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ Contador de Amor ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap');
+
+        :root {
+            --cor-principal: #ff3b3f;
+            --cor-secundaria: #ff7f50;
+        }
+
+        body {
+            background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 700px;
+            width: 90%;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .contador {
+            font-size: 2rem;
+            color: #fff;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .data-destaque {
+            font-size: 1.4rem;
+            color: #ffeb3b;
+            margin-bottom: 1rem;
+        }
+
+        .detalhe-coracao {
+            font-size: 2.5rem;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #mensagem {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 2.2rem; }
+            .contador { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="detalhe-coracao">❤️</div>
+        <h1>Nosso Tempo Juntos</h1>
+        <div class="data-destaque">15 de Janeiro de 2025</div>
+        <div class="contador" id="contador"></div>
+        <div id="mensagem"></div>
+    </div>
+
+    <script>
+        const DATA_NAMORO = new Date(2025, 0, 15); // 15/01/2025
+        const MENSAGENS = [
+            "Cada instante contigo é especial...",
+            "Nossa história só está começando 🌸",
+            "O tempo voa quando estamos juntos ⏳💖",
+            "Dias de pura felicidade ao seu lado",
+            "Contando cada segundo do nosso amor"
+        ];
+
+        function atualizarContador() {
+            const hoje = new Date();
+            const diferenca = Math.abs(hoje - DATA_NAMORO);
+            
+            let anos = hoje.getFullYear() - DATA_NAMORO.getFullYear();
+            let meses = hoje.getMonth() - DATA_NAMORO.getMonth();
+            let dias = hoje.getDate() - DATA_NAMORO.getDate();
+
+            // Ajuste de datas negativas
+            if (dias < 0) {
+                const ultimoDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
+                dias = ultimoDiaMes - DATA_NAMORO.getDate() + hoje.getDate();
+                meses--;
+            }
+
+            if (meses < 0) {
+                meses += 12;
+                anos--;
+            }
+
+            // Cálculo do tempo preciso
+            const segundosTotal = Math.floor(diferenca / 1000);
+            const minutosTotal = Math.floor(segundosTotal / 60);
+            const horasTotal = Math.floor(minutosTotal / 60);
+            
+            const horas = horasTotal % 24;
+            const minutos = minutosTotal % 60;
+            const segundos = segundosTotal % 60;
+
+            // Exibição formatada
+            let texto;
+            if (hoje < DATA_NAMORO) {
+                texto = `Faltam:<br>${anos} ano${plural(anos)}, ${meses} m${plural(meses)} e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+            } else {
+                texto = `Juntos há:<br>${anos} ano${plural(anos)}, ${meses} m${plural(meses)} e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+            }
+
+            document.getElementById('contador').innerHTML = texto;
+        }
+
+        function plural(num) {
+            return num !== 1 ? 's' : '';
+        }
+
+        function atualizarMensagem() {
+            const randomIndex = Math.floor(Math.random() * MENSAGENS.length);
+            document.getElementById('mensagem').textContent = MENSAGENS[randomIndex];
+        }
+
+        // Inicialização
+        setInterval(atualizarContador, 1000);
+        setInterval(atualizarMensagem, 5000);
+        atualizarContador();
+        atualizarMensagem();
+    </script>
+</body>
+</html>
