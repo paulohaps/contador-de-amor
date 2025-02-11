@@ -22,6 +22,7 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
             animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
         }
 
         @keyframes gradientBG {
@@ -35,12 +36,13 @@
             z-index: 2;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 25px;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
             text-align: center;
-            max-width: 700px;
-            width: 90%;
+            max-width: 90%;
+            width: 100%;
+            margin: 1rem;
         }
 
         h1 {
@@ -62,10 +64,10 @@
         .contador {
             font-size: 2rem;
             color: #fff;
-            padding: 2rem;
+            padding: 1.5rem;
             background: rgba(0, 0, 0, 0.1);
             border-radius: 15px;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
         }
 
         .data-destaque {
@@ -102,10 +104,20 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 1.5rem; }
+            .container { padding: 1rem; }
             h1 { font-size: 3rem; }
             .nomes { font-size: 2.5rem; }
-            .contador { font-size: 1.5rem; }
+            .contador { font-size: 1.5rem; padding: 1rem; }
+            .data-destaque { font-size: 1.2rem; }
+            #mensagem { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem; }
+            .nomes { font-size: 2rem; }
+            .contador { font-size: 1.2rem; padding: 0.8rem; }
+            .data-destaque { font-size: 1rem; }
+            #mensagem { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -141,11 +153,11 @@
 
         const DATA_NAMORO = new Date(2025, 0, 15); // 15/01/2025
         const MENSAGENS = [
-            "Cada instante contigo é especial...",
+            "Cada instante contigo é especial... ❤️",
             "Nossa história só está começando 🌸",
             "O tempo voa quando estamos juntos ⏳💖",
-            "Dias de pura felicidade ao seu lado",
-            "Contando cada segundo do nosso amor"
+            "Dias de pura felicidade ao seu lado 🫶🏼",
+            "Contando cada segundo do nosso amor 🥰"
         ];
 
         function atualizarContador() {
@@ -177,9 +189,9 @@
 
             let texto;
             if (hoje < DATA_NAMORO) {
-                texto = `Faltam:<br>${anos} ano${plural(anos)}, ${meses} m${plural(meses)} e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+                texto = `Faltam:<br>${anos} ano${plural(anos)}, ${meses} meses e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
             } else {
-                texto = `Juntos há:<br>${anos} ano${plural(anos)}, ${meses} m${plural(meses)} e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+                texto = `Juntos há:<br>${anos} ano${plural(anos)}, ${meses} meses e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
             }
 
             document.getElementById('contador').innerHTML = texto;
