@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ Contador de Amor ❤️</title>
+    <title>❤️ Paulo & Thaynara ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Montserrat:wght@400;700&display=swap');
 
         :root {
             --cor-principal: #ff3b3f;
@@ -13,13 +13,14 @@
         }
 
         body {
-            background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
+            margin: 0;
+            overflow: hidden;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Montserrat', sans-serif;
-            margin: 0;
+            background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
             animation: gradientBG 15s ease infinite;
         }
 
@@ -30,6 +31,8 @@
         }
 
         .container {
+            position: relative;
+            z-index: 2;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
             padding: 3rem;
@@ -41,10 +44,18 @@
         }
 
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
             color: #fff;
             margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nomes {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #ffeb3b;
+            margin: 1rem 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -82,23 +93,52 @@
             opacity: 0.9;
         }
 
+        /* Efeito de partículas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
         @media (max-width: 768px) {
             .container { padding: 1.5rem; }
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 3rem; }
+            .nomes { font-size: 2.5rem; }
             .contador { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
     <div class="container">
         <div class="detalhe-coracao">❤️</div>
         <h1>Nosso Tempo Juntos</h1>
-        <div class="data-destaque">15 de Janeiro de 2025</div>
+        <div class="nomes">Paulo ❤️ Thaynara</div>
+        <div class="data-destaque">Desde 15 de Janeiro de 2025</div>
         <div class="contador" id="contador"></div>
         <div id="mensagem"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Configuração do efeito de partículas
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.7, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 3 }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" } }
+            }
+        });
+
         const DATA_NAMORO = new Date(2025, 0, 15); // 15/01/2025
         const MENSAGENS = [
             "Cada instante contigo é especial...",
@@ -116,7 +156,6 @@
             let meses = hoje.getMonth() - DATA_NAMORO.getMonth();
             let dias = hoje.getDate() - DATA_NAMORO.getDate();
 
-            // Ajuste de datas negativas
             if (dias < 0) {
                 const ultimoDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
                 dias = ultimoDiaMes - DATA_NAMORO.getDate() + hoje.getDate();
@@ -128,7 +167,6 @@
                 anos--;
             }
 
-            // Cálculo do tempo preciso
             const segundosTotal = Math.floor(diferenca / 1000);
             const minutosTotal = Math.floor(segundosTotal / 60);
             const horasTotal = Math.floor(minutosTotal / 60);
@@ -137,7 +175,6 @@
             const minutos = minutosTotal % 60;
             const segundos = segundosTotal % 60;
 
-            // Exibição formatada
             let texto;
             if (hoje < DATA_NAMORO) {
                 texto = `Faltam:<br>${anos} ano${plural(anos)}, ${meses} m${plural(meses)} e ${dias} dia${plural(dias)}<br>${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
@@ -157,7 +194,6 @@
             document.getElementById('mensagem').textContent = MENSAGENS[randomIndex];
         }
 
-        // Inicialização
         setInterval(atualizarContador, 1000);
         setInterval(atualizarMensagem, 5000);
         atualizarContador();
